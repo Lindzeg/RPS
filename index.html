@@ -5,9 +5,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock Paper Scissors</title>
-    <script src="functions.js" defer></script>
+    <script src="gameFunctions.js" defer></script>
+    <script src="effects.js" defer></script>
+    <link rel="stylesheet" href="style/app.css">
 </head>
+
 <body>
-    
+
+<header>
+    <img class="cloud" src="style/img/cloud0.png" alt="">
+    <img class="cloud" src="style/img/cloud.png" alt="">
+    <img class="cloud" src="style/img/cloud1.png" alt="">
+    <img class="cloud" src="style/img/cloud2.png" alt="">
+</header>
+
+<main>
+    <section>
+        <div class="modal">
+            <div class="titlebar">
+                <span>Rock Paper Scissors</span>
+            </div>
+            <div class="content">
+                <p class="game-intro"></p>
+                <button id="startGame">Play game</button>
+            </div>
+        </div>
+
+        <div class="modal playscreen">
+            <div class="titlebar">
+                <span>Cancel game?</span>
+                <button id="close"> cancel</button>
+            </div>
+            <div class="content">
+                <div class="choice computer">
+                    
+                    <img src="style/img/rock.png" alt="rock">
+                    <img src="style/img/paper.png" alt="paper">
+                    <img src="style/img/scissor.png" alt="scissors">
+                </div>
+                <div class="game-info">
+                    <p>Player turn</p>
+                    <p>Round info</p>
+                </div>
+                <div class="choice user">
+                    
+                    <img src="style/img/rock.png" alt="rock">
+                    <img src="style/img/paper.png" alt="paper">
+                    <img src="style/img/scissor.png" alt="scissors">
+                </div>
+                <div class="game-controls">
+                    <button id="rock">Rock</button>
+                    <button id="paper">Paper</button>
+                    <button id="scissors">Scissors</button>
+                </div>
+            </div>
+        </div>
+        
+    </section>
+</main>
+
+
+
+<footer></footer>
+
 </body>
+
 </html>

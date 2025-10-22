@@ -1,0 +1,167 @@
+@import 'webfonts.css';
+@import 'animations.css';
+
+:root {
+  --font-mono: 'VCR OSD Mono', monospace;
+  --plum: #533747;
+  --plum-light: #5F506B;
+  --berrie: #6A6B83;
+  --berrie-light: #76949F;
+  --dragonfruit: #86BBBD;
+  --cotton: #f1e2da;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: var(--font-mono);
+  margin: 0;
+}
+
+h1,h2,h3,p,a{ 
+    text-align:center; 
+} 
+
+h1{ } 
+
+h2{ 
+    font-size:30px; 
+} 
+h3{ } 
+
+p{ 
+    font-size:20px; 
+} 
+a{ }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: no-repeat linear-gradient(var(--plum), var(--plum-light), var(--berrie), var(--berrie-light), var(--dragonfruit));
+  min-height: 100vh;
+  color: var(--plum-light);
+}
+
+/* uitgeklapte nested regels ↓ */
+
+button {
+  background-color: var(--cotton);
+  border: solid black 2px;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  box-shadow: -3px 3px 0px black;
+  font-size: 1.125rem;
+  color: rgb(46, 31, 99);
+  cursor: pointer;
+}
+
+button:hover {
+  box-shadow: none;
+  transition: 0.1s ease all;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  gap: 4rem;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+  overflow-x: hidden;
+}
+
+header > :nth-of-type(2n) {
+    margin-top:8rem;
+    width:25rem;
+}
+
+.cloud {
+  width:20rem; 
+  height:20rem; 
+}
+
+main{ 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    flex-direction: column; 
+    width:100%; 
+    height:auto;
+}
+
+section{ 
+    display: flex; 
+    justify-content: center; 
+    flex-direction: column; 
+    align-items: center; 
+    gap:8rem; 
+    width:85%;
+}
+
+.modal{ height: auto; 
+    width: 40rem; 
+    border-radius: 10px; 
+    background-color: var(--cotton);
+    display: block;
+    transition: opacity 0.5s ease, display 0.5s ease;
+}
+.modal.hidden {
+    opacity: 0;
+    display: none;
+}
+.modal.playscreen{
+    display: none;
+    transition: opacity 0.5s ease, display 0.5s ease;
+}
+.modal.playscreen.show{
+    display:block;
+    opacity: 100;
+}
+
+.titlebar{ 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding:0.5rem; 
+    background-color: var(--dragonfruit); 
+    
+}
+
+.content{ 
+    height:100%; 
+    width:100%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    flex-direction: column; 
+    gap:2rem; 
+    padding:2rem;
+}
+
+.game-intro {
+  white-space: pre-line;
+}
+
+.choice{ 
+    width:100%; 
+    height:auto; 
+    display: flex; 
+    flex-direction: row; 
+    align-items: center;
+    justify-content: center; 
+    gap:5rem;
+}
+
+.content .choice img { 
+    height:5rem; 
+    width: auto; 
+}
+
+.game-controls{ 
+    display: flex; 
+    gap:3rem; 
+}
+footer{
+    height:40rem;
+}

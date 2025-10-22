@@ -1,3 +1,4 @@
+
 let humanScore = 0;
 let computerScore = 0;
 const rules = [
@@ -7,6 +8,28 @@ const rules = [
 ];
 
 
+/* 
+
+  opens modal window
+  starts humanChoice function
+  opens playscreen window 
+
+*/
+
+function startGameIntro() {
+  const playscreen = document.querySelector(".modal.playscreen");
+  const modal = document.querySelector(".modal");
+  const playGameBtn = document.querySelector("#startGame");
+
+  playGameBtn.onclick =  function() {
+    modal.classList.add("hidden");
+    playscreen.classList.add("show");
+  }
+}
+
+startGameIntro();
+
+
 /*
     create a function that returns the user input and 
     validates the answer against the allowed values.
@@ -14,12 +37,6 @@ const rules = [
 
 function getHumanChoice() {
 let userInput
-
-// introduction
-alert("Let's play a game, choose one of the following: Rock, Paper or Scissors");
-// set user input and open a prompt
-userInput = prompt("What will it be?");
-
 // validate the user input and check if it corresponds with set values
 let validateChoices = ["rock", "paper", "scissors"];
 
@@ -27,8 +44,6 @@ let validateChoices = ["rock", "paper", "scissors"];
         console.log("Sorry your input does not match the required answers. Choose Rock, Paper or Scissors");
         return null;
     } 
-    
-    userInput = userInput.toLowerCase();
 
     if (!validateChoices.includes(userInput)) {
         console.log( "Sorry your input does not match the required answers. Choose Rock, Paper or Scissors");
@@ -97,7 +112,7 @@ function playRound(humanChoice, computerChoice) {
     );
     //declare a winner based on computer answer and human answer
     if (humanChoice === computerChoice) {
-      console.log("Its a tie! Try again.");
+      console.log("It's a tie! Try again.");
     } else if (humanWins) {
       console.log(`You win ${humanChoice} beats ${computerChoice}`);
       humanScore++;
@@ -143,7 +158,7 @@ function playGame() {
           console.log(`End of game`);
           break;
         } else if (computerScore === humanScore) {
-          console.log(`Its a tie! There is no winner`);
+          console.log(`It's a tie! There is no winner`);
           console.log(`round ${round} of ${totalGame}`);
           console.log(`End of game`);
           break;
@@ -152,4 +167,7 @@ function playGame() {
     }
   }
 }
-playGame();
+// playGame();
+
+
+
