@@ -17,21 +17,30 @@
   margin: 0;
 }
 
-h1,h2,h3,p,a{ 
+h2,p,a{ 
     text-align:center; 
 } 
-
-h1{ } 
 
 h2{ 
     font-size:30px; 
 } 
-h3{ } 
 
 p{ 
     font-size:20px; 
 } 
-a{ }
+p#winnerLog, #gameRound{
+    font-size:22px;
+    font-weight:bold;
+}
+
+.game-intro, 
+#computerMove,
+#winnerLog,
+#gameRound,
+#userMove {
+  white-space: pre-line;
+}
+
 
 html {
   scroll-behavior: smooth;
@@ -43,7 +52,6 @@ body {
   color: var(--plum-light);
 }
 
-/* uitgeklapte nested regels ↓ */
 
 button {
   background-color: var(--cotton);
@@ -99,23 +107,25 @@ section{
     width:85%;
 }
 
-.modal{ height: auto; 
+.modal { 
+    height: auto; 
     width: 40rem; 
     border-radius: 10px; 
     background-color: var(--cotton);
-    display: block;
-    transition: opacity 0.5s ease, display 0.5s ease;
+    visibility: visible;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
 }
 .modal.hidden {
     opacity: 0;
-    display: none;
+    visibility: hidden;
 }
 .modal.playscreen{
-    display: none;
-    transition: opacity 0.5s ease, display 0.5s ease;
+    margin-top:-22rem;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
 }
 .modal.playscreen.show{
-    display:block;
+    visibility: visible;
     opacity: 100;
 }
 
@@ -124,8 +134,7 @@ section{
     justify-content: space-between; 
     align-items: center; 
     padding:0.5rem; 
-    background-color: var(--dragonfruit); 
-    
+    background-color: var(--dragonfruit);  
 }
 
 .content{ 
@@ -139,8 +148,10 @@ section{
     padding:2rem;
 }
 
-.game-intro {
-  white-space: pre-line;
+.game-info{
+    display: flex;
+    flex-direction: column;
+    gap:2rem;
 }
 
 .choice{ 
@@ -156,12 +167,31 @@ section{
 .content .choice img { 
     height:5rem; 
     width: auto; 
+    display: none;
 }
 
 .game-controls{ 
     display: flex; 
     gap:3rem; 
 }
+
+/*---------- 
+    game visibilty toggle on images - butons
+--------------*/
+#btnNextRound{
+    display: none;
+}
+
+#rock.show, 
+#paper.show, 
+#scissors.show,
+#userRock.show,
+#userScissors.show,
+#userPaper.show,
+#btnNextRound.show{
+    display: block;
+}
+
 footer{
     height:40rem;
 }

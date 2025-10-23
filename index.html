@@ -34,29 +34,30 @@
         <div class="modal playscreen">
             <div class="titlebar">
                 <span>Cancel game?</span>
-                <button id="close"> cancel</button>
+                <button id="cancelGame"> cancel</button>
             </div>
             <div class="content">
                 <div class="choice computer">
-                    
-                    <img src="style/img/rock.png" alt="rock">
-                    <img src="style/img/paper.png" alt="paper">
-                    <img src="style/img/scissor.png" alt="scissors">
+                    <img id="rock" src="style/img/rock.png" alt="rock">
+                    <img id="paper" src="style/img/paper.png" alt="paper">
+                    <img id="scissors" src="style/img/scissor.png" alt="scissors">
                 </div>
                 <div class="game-info">
-                    <p>Player turn</p>
-                    <p>Round info</p>
+                    <p id="computerMove"></p>
+                    <p id="winnerLog"></p>
+                    <p id="gameRound"></p>
+                    <p id="userMove"></p>
                 </div>
                 <div class="choice user">
-                    
-                    <img src="style/img/rock.png" alt="rock">
-                    <img src="style/img/paper.png" alt="paper">
-                    <img src="style/img/scissor.png" alt="scissors">
+                    <img id="userRock" src="style/img/rock.png" alt="rock">
+                    <img id="userPaper" src="style/img/paper.png" alt="paper">
+                    <img id="userScissors" src="style/img/scissor.png" alt="scissors">
                 </div>
                 <div class="game-controls">
-                    <button id="rock">Rock</button>
-                    <button id="paper">Paper</button>
-                    <button id="scissors">Scissors</button>
+                    <button id="btnRock">Rock</button>
+                    <button id="btnPaper">Paper</button>
+                    <button id="btnScissors">Scissors</button>
+                    <button id="btnNextRound">Next round</button>
                 </div>
             </div>
         </div>

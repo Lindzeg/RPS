@@ -1,128 +1,193 @@
-
 let humanScore = 0;
 let computerScore = 0;
+let currentRound = 0;
+const totalRounds = 5;
 const rules = [
   ["rock", "scissors"],
   ["paper", "rock"],
   ["scissors", "paper"],
 ];
 
+//p elements
+const textElements = {
+  winnerLog: document.querySelector("#winnerLog"),
+  gameRound: document.querySelector("#gameRound"),
+  userMove: document.querySelector("#userMove"),
+  computerMove: document.querySelector("#computerMove"),
+};
 
-/* 
+const { winnerLog, gameRound, userMove, computerMove } = textElements;
+
+//img display for user choices
+const userImg = [
+  document.querySelector("#userRock"),
+  document.querySelector("#userPaper"),
+  document.querySelector("#userScissors"),
+];
+
+//img display for pc choices
+const compImg = [
+  document.querySelector("#rock"),
+  document.querySelector("#paper"),
+  document.querySelector("#scissors"),
+];
+
+const btns = [
+  document.querySelector("#btnRock"),
+  document.querySelector("#btnPaper"),
+  document.querySelector("#btnScissors"),
+];
+
+const humanChoices = [
+  [
+    document.querySelector("#userRock"),
+    document.querySelector("#btnRock"),
+    "rock",
+  ],
+  [
+    document.querySelector("#userPaper"),
+    document.querySelector("#btnPaper"),
+    "paper",
+  ],
+  [
+    document.querySelector("#userScissors"),
+    document.querySelector("#btnScissors"),
+    "scissors",
+  ],
+];
+
+const compChoices = ["rock", "paper", "scissors"];
+
+/* -----------------
 
   opens modal window
   starts humanChoice function
   opens playscreen window 
 
-*/
+---------------------*/
 
 function startGameIntro() {
   const playscreen = document.querySelector(".modal.playscreen");
   const modal = document.querySelector(".modal");
   const playGameBtn = document.querySelector("#startGame");
 
-  playGameBtn.onclick =  function() {
+  playGameBtn.onclick = function () {
     modal.classList.add("hidden");
     playscreen.classList.add("show");
-  }
+  };
 }
 
 startGameIntro();
 
+/*-------------------
 
-/*
-    create a function that returns the user input and 
-    validates the answer against the allowed values.
-*/
+    returns one of the following strings: rock - paper - scissors,
+    logs the user choice
+    gets the related image
+    passes playround in event handler
+
+----------------*/
 
 function getHumanChoice() {
-let userInput
-// validate the user input and check if it corresponds with set values
-let validateChoices = ["rock", "paper", "scissors"];
+  winnerLog.textContent = "Choose your fighter";
+  const humanMove = "You choose: ";
 
-    if ((userInput === null) || (userInput === "")) {
-        console.log("Sorry your input does not match the required answers. Choose Rock, Paper or Scissors");
-        return null;
-    } 
-
-    if (!validateChoices.includes(userInput)) {
-        console.log( "Sorry your input does not match the required answers. Choose Rock, Paper or Scissors");
-        return null;
-    }
-
-    if (validateChoices.includes(userInput)) {
-        console.log(`You choose ${userInput}`);
-    }
-
-return userInput;
+  //set eventListener on a button click that calls playRound and returns a string
+  humanChoices.forEach(([img, btn, humanChoice]) => {
+    btn.addEventListener("click", () => {
+      currentRound++;
+      if (currentRound < totalRounds) {
+        img.classList.add("show");
+        userMove.textContent = humanMove + humanChoice;
+        playRound(humanChoice);
+      } else if (currentRound === totalRounds) {
+        playGame();
+      }
+    });
+  });
 }
 
-/* 
-    create a function that returns one of the following strings: 
-    rock - paper - scissors
-*/
+getHumanChoice();
+
+/*------------------
+
+    create a function that:
+    returns one of the following strings: rock - paper - scissors,
+    logs the computer choice
+    gets the related image
+
+----------------------*/
 
 function getComputerChoice() {
-  // use math.random to return a random value between 0 - 2
-  let num = Math.floor(Math.random() * 3);
-  let value;
+  const num = Math.floor(Math.random() * compImg.length);
 
-  // switch values based on the output that is given by num.
-  switch (num) {
-    case 0:
-      value = "rock";
-      break;
-    case 1:
-      value = "paper";
-      break;
-    case 2:
-      value = "scissors";
-      break;
-    default:
-      value = "Sorry we could not process your request";
-  }
+  compImg[num].classList.add("show");
+  computerMove.textContent = `The computer chooses: ${compChoices[num]}`;
 
-  console.log(`The computer chooses ${value}`);
-  return value;
+  return compChoices[num];
 }
 
-/*
+/*---------------------------
     take human and computer choices as arguments
     play a single round
     keeps track of round winners score 
     log winner announcement
-*/
+----------------------------*/
 
-function playRound(humanChoice, computerChoice) {
-  humanChoice = getHumanChoice();
-
-  //check if humanchoice is null, if so, stop the function
-  if (humanChoice === null) {
-    return null;
-  } else {
-    //only if humanChoice is not null, call getComputerChoice()
+function playRound(humanChoice) {
+  if (humanChoice) {
+    //call getComputerChoice() once humanChoice is chosen
     computerChoice = getComputerChoice();
+
+    btns.forEach((btn) => {
+      btn.style.display = "none";
+    });
+
     // first index in rules array is set to winner, second is loser.
     // If humanchoice relates to first index then you win, if not computer wins
+
     const humanWins = rules.some(
       ([winner, loser]) => winner === humanChoice && loser === computerChoice
     );
     const computerWins = rules.some(
       ([winner, loser]) => winner === computerChoice && loser === humanChoice
     );
+
+    gameRound.textContent = `Started round ${currentRound} of ${totalRounds}`;
+
     //declare a winner based on computer answer and human answer
+
     if (humanChoice === computerChoice) {
-      console.log("It's a tie! Try again.");
+      winnerLog.textContent = "It's a tie! Try again.";
     } else if (humanWins) {
-      console.log(`You win ${humanChoice} beats ${computerChoice}`);
       humanScore++;
-      console.log(`You get a point. ${humanScore}`);
+      winnerLog.textContent = `You win ${humanChoice} beats ${computerChoice} \n Player: ${humanScore}  Computer: ${computerScore}`;
     } else if (computerWins) {
-      console.log(`Computer wins ${computerChoice} beats ${humanChoice}`);
       computerScore++;
-      console.log(`Computer gets a point. ${computerScore}`);
+      winnerLog.textContent = `Computer wins ${computerChoice} beats ${humanChoice} \n Player: ${humanScore}  Computer: ${computerScore}`;
     }
   }
+
+   setTimeout(() => {
+    const nextRound = document.querySelector("#btnNextRound");
+
+    nextRound.classList.add("show");
+    nextRound.addEventListener(
+      "click",
+      () => {
+        nextRound.classList.remove("show");
+        // reset UI
+        userImg.forEach((img) => img.classList.remove("show"));
+        compImg.forEach((img) => img.classList.remove("show"))
+        userMove.textContent = "";
+        computerMove.textContent = "";
+        // reset instructions and show buttons
+        winnerLog.textContent = "Choose your fighter";
+        btns.forEach((btn) => (btn.style.display = "block"));
+      },
+      { once: true }
+    );
+  }, 1500);
 
   return {
     humanChoice: humanChoice,
@@ -132,42 +197,22 @@ function playRound(humanChoice, computerChoice) {
   };
 }
 
-/*
+
+
+/*-----------------------
     calls playRound() 5 times
     declares a winner after 5 rounds  
     logs total score
-*/
+--------------------*/
 
 function playGame() {
-  let totalGame = 5;
-  for (round = 1; round <= totalGame; round++) {
-    console.log(`Started round ${round} of ${totalGame}`);
-    let result = playRound();
-    if (result == null) {
-      break;
-    } else {
-      if (round == totalGame) {
-        if (humanScore < computerScore) {
-          console.log(`The winner is computer with ${computerScore} points`);
-          console.log(`round ${round} of ${totalGame}`);
-          console.log(`End of game`);
-          break;
-        } else if (computerScore < humanScore) {
-          console.log(`The winner is you with ${humanScore} points`);
-          console.log(`round ${round} of ${totalGame}`);
-          console.log(`End of game`);
-          break;
-        } else if (computerScore === humanScore) {
-          console.log(`It's a tie! There is no winner`);
-          console.log(`round ${round} of ${totalGame}`);
-          console.log(`End of game`);
-          break;
-        }
-      }
+  if (currentRound === totalRounds) {
+    if (humanScore < computerScore) {
+      gameRound.textContent = `The winner is computer with ${computerScore} points \n End of game`;
+    } else if (computerScore < humanScore) {
+      gameRound.textContent = `The winner is you with ${humanScore} points \n End of game`;
+    } else if (computerScore === humanScore) {
+      gameRound.textContent = `It's a tie! There is no winner \n End of game`;
     }
   }
 }
-// playGame();
-
-
-
