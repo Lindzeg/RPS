@@ -80,14 +80,34 @@ header {
   overflow-x: hidden;
 }
 
+@media (max-width: 640px) {
+  .header {
+    flex-wrap: wrap;
+  }
+}
+
 header > :nth-of-type(2n) {
     margin-top:8rem;
     width:25rem;
 }
 
+@media (max-width: 640px) {
+  header > :nth-of-type(2n) {
+    margin-top:1rem;
+    width:15rem;
+  }
+}
+
 .cloud {
   width:20rem; 
   height:20rem; 
+}
+
+@media (max-width: 640px) {
+  .cloud {
+    width:10rem; 
+    height:10rem;
+  }
 }
 
 main{ 
@@ -106,6 +126,7 @@ section{
     align-items: center; 
     gap:8rem; 
     width:85%;
+    height:auto;
 }
 
 .modal { 
@@ -116,6 +137,13 @@ section{
     visibility: visible;
     transition: opacity 0.5s ease, visibility 0.5s ease;
 }
+
+@media (max-width: 640px) {
+  .modal {
+    width: 90%;
+  }
+}
+
 .modal.hidden {
     opacity: 0;
     visibility: hidden;
