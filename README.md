@@ -1,7 +1,7 @@
 Rock Paper Scissors game
 
-Game Rules
+Play 5 rounds
 
 Compare hands to see who wins
 
-Winner gets a cookie! 🍪
+
