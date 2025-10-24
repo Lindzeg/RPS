@@ -106,10 +106,8 @@ getHumanChoice();
 
 function getComputerChoice() {
   const num = Math.floor(Math.random() * compImg.length);
-  
   compImg[num].classList.add("show");
   computerMove.textContent = `The computer chooses: ${compChoices[num]}`;
-  console.log(compChoices[num]);
   return compChoices[num];
 }
 
