@@ -15,7 +15,6 @@ const textElements = {
   userMove: document.querySelector("#userMove"),
   computerMove: document.querySelector("#computerMove"),
 };
-
 const { winnerLog, gameRound, userMove, computerMove } = textElements;
 
 //img display for user choices
@@ -25,38 +24,17 @@ const userImg = [
   document.querySelector("#userScissors"),
 ];
 
+
 //img display for pc choices
 const compImg = [
   document.querySelector("#rock"),
   document.querySelector("#paper"),
   document.querySelector("#scissors"),
 ];
-
-const btns = [
-  document.querySelector("#btnRock"),
-  document.querySelector("#btnPaper"),
-  document.querySelector("#btnScissors"),
-];
-
-const humanChoices = [
-  [
-    document.querySelector("#userRock"),
-    document.querySelector("#btnRock"),
-    "rock",
-  ],
-  [
-    document.querySelector("#userPaper"),
-    document.querySelector("#btnPaper"),
-    "paper",
-  ],
-  [
-    document.querySelector("#userScissors"),
-    document.querySelector("#btnScissors"),
-    "scissors",
-  ],
-];
-
 const compChoices = ["rock", "paper", "scissors"];
+
+const nextRound = document.querySelector("#btnNextRound");
+const playAgain = document.querySelector("#btnplayAgain");
 
 /* -----------------
 
@@ -89,9 +67,15 @@ startGameIntro();
 ----------------*/
 
 function getHumanChoice() {
+  winnerLog.style.display = "block";
   winnerLog.textContent = "Choose your fighter";
   const humanMove = "You choose: ";
 
+  const humanChoices = [
+    [document.querySelector("#userRock"), document.querySelector("#btnRock"), "rock"],
+    [document.querySelector("#userPaper"), document.querySelector("#btnPaper"), "paper"],
+    [document.querySelector("#userScissors"), document.querySelector("#btnScissors"), "scissors"],
+  ];
   //set eventListener on a button click that calls playRound and returns a string
   humanChoices.forEach(([img, btn, humanChoice]) => {
     btn.addEventListener("click", () => {
@@ -101,6 +85,9 @@ function getHumanChoice() {
         userMove.textContent = humanMove + humanChoice;
         playRound(humanChoice);
       } else if (currentRound === totalRounds) {
+        img.classList.add("show");
+        userMove.textContent = humanMove + humanChoice;
+        playRound(humanChoice);
         playGame();
       }
     });
@@ -111,52 +98,49 @@ getHumanChoice();
 
 /*------------------
 
-    create a function that:
-    returns one of the following strings: rock - paper - scissors,
-    logs the computer choice
-    gets the related image
+    selects a random img index
+    shows the corresponding image
+    links the image to its matching string and logs the choice
 
 ----------------------*/
 
 function getComputerChoice() {
   const num = Math.floor(Math.random() * compImg.length);
-
+  
   compImg[num].classList.add("show");
   computerMove.textContent = `The computer chooses: ${compChoices[num]}`;
-
+  console.log(compChoices[num]);
   return compChoices[num];
 }
 
 /*---------------------------
-    take human and computer choices as arguments
+
+    take humanchoice as argument
     play a single round
     keeps track of round winners score 
     log winner announcement
+
 ----------------------------*/
 
 function playRound(humanChoice) {
   if (humanChoice) {
     //call getComputerChoice() once humanChoice is chosen
     computerChoice = getComputerChoice();
-
-    btns.forEach((btn) => {
+    getBtns().forEach((btn) => {
       btn.style.display = "none";
     });
 
     // first index in rules array is set to winner, second is loser.
     // If humanchoice relates to first index then you win, if not computer wins
-
     const humanWins = rules.some(
       ([winner, loser]) => winner === humanChoice && loser === computerChoice
     );
     const computerWins = rules.some(
       ([winner, loser]) => winner === computerChoice && loser === humanChoice
     );
-
     gameRound.textContent = `Started round ${currentRound} of ${totalRounds}`;
 
     //declare a winner based on computer answer and human answer
-
     if (humanChoice === computerChoice) {
       winnerLog.textContent = "It's a tie! Try again.";
     } else if (humanWins) {
@@ -166,47 +150,28 @@ function playRound(humanChoice) {
       computerScore++;
       winnerLog.textContent = `Computer wins ${computerChoice} beats ${humanChoice} \n Player: ${humanScore}  Computer: ${computerScore}`;
     }
+
+    if (currentRound < totalRounds) {
+      showNextRoundButton();
+    }
   }
 
-   setTimeout(() => {
-    const nextRound = document.querySelector("#btnNextRound");
-
-    nextRound.classList.add("show");
-    nextRound.addEventListener(
-      "click",
-      () => {
-        nextRound.classList.remove("show");
-        // reset UI
-        userImg.forEach((img) => img.classList.remove("show"));
-        compImg.forEach((img) => img.classList.remove("show"))
-        userMove.textContent = "";
-        computerMove.textContent = "";
-        // reset instructions and show buttons
-        winnerLog.textContent = "Choose your fighter";
-        btns.forEach((btn) => (btn.style.display = "block"));
-      },
-      { once: true }
-    );
-  }, 1500);
-
   return {
-    humanChoice: humanChoice,
-    computerChoice: computerChoice,
     humanScore: humanScore,
     computerScore: computerScore,
   };
 }
 
-
-
 /*-----------------------
-    calls playRound() 5 times
+
     declares a winner after 5 rounds  
     logs total score
+
 --------------------*/
 
 function playGame() {
   if (currentRound === totalRounds) {
+    winnerLog.style.display = "none";
     if (humanScore < computerScore) {
       gameRound.textContent = `The winner is computer with ${computerScore} points \n End of game`;
     } else if (computerScore < humanScore) {
@@ -215,4 +180,60 @@ function playGame() {
       gameRound.textContent = `It's a tie! There is no winner \n End of game`;
     }
   }
+  playNewGame();
+}
+
+
+function playNewGame() {
+  setTimeout(() => {
+    playAgain.classList.add("show");
+    playAgain.addEventListener("click", () => {
+      playAgain.classList.remove("show");
+      humanScore = 0;
+      computerScore = 0;
+      currentRound = 0;
+      resetUI();
+      removeEvents();
+      getHumanChoice();
+    },
+    {once: true}
+  );
+  }, 500);
+}
+
+function showNextRoundButton() {
+  setTimeout(() => {
+  nextRound.classList.add("show");
+  nextRound.addEventListener("click", handleNextRoundClick, { once: true });
+  }, 500);
+}
+
+function handleNextRoundClick() {
+   nextRound.classList.remove("show");
+   winnerLog.textContent = "Choose your fighter"
+   resetUI();
+}
+
+function getBtns() {
+  return [
+    document.querySelector("#btnRock"),
+    document.querySelector("#btnPaper"),
+    document.querySelector("#btnScissors"),
+  ];
+}
+
+function removeEvents() {
+  getBtns().forEach((btn) => {
+    const newBtn = btn.cloneNode(true);
+    btn.parentNode.replaceChild(newBtn, btn);
+  });
+}
+
+function resetUI(){
+  userImg.forEach((img) => img.classList.remove("show"));
+  compImg.forEach((img) => img.classList.remove("show"))
+  userMove.textContent = "";
+  computerMove.textContent = "";
+  gameRound.textContent = "";
+  getBtns().forEach((btn) => (btn.style.display = "block"));
 }

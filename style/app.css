@@ -2,6 +2,7 @@
 @import 'animations.css';
 
 :root {
+    
   --font-mono: 'VCR OSD Mono', monospace;
   --plum: #533747;
   --plum-light: #5F506B;
@@ -178,7 +179,7 @@ section{
 /*---------- 
     game visibilty toggle on images - butons
 --------------*/
-#btnNextRound{
+#btnNextRound, #btnplayAgain{
     display: none;
 }
 
@@ -188,7 +189,8 @@ section{
 #userRock.show,
 #userScissors.show,
 #userPaper.show,
-#btnNextRound.show{
+#btnNextRound.show,
+#btnplayAgain.show{
     display: block;
 }
 
