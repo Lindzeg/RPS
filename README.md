@@ -1,4 +1,4 @@
-Rock Paper Scissors game: https://lindzeg.github.io/RPS/
+Rock Paper Scissors game
 
 Play 5 rounds
 
