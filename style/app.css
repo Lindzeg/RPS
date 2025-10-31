@@ -2,7 +2,6 @@
 @import 'animations.css';
 
 :root {
-    
   --font-mono: 'VCR OSD Mono', monospace;
   --plum: #533747;
   --plum-light: #5F506B;
@@ -199,10 +198,19 @@ section{
     display: none;
 }
 
-.game-controls{ 
+.game-controls{
+    width: 100%; 
     display: flex; 
+    justify-content: center;
     gap:3rem; 
 }
+
+@media (max-width: 640px) {
+    .game-controls {
+      width: 100%;
+      flex-direction: column;
+    }
+  }
 
 /*---------- 
     game visibilty toggle on images - butons

@@ -35,6 +35,7 @@ const compChoices = ["rock", "paper", "scissors"];
 
 const nextRound = document.querySelector("#btnNextRound");
 const playAgain = document.querySelector("#btnplayAgain");
+const stopGame = document.querySelector("#cancelGame");
 
 /* -----------------
 
@@ -54,8 +55,27 @@ function startGameIntro() {
     playscreen.classList.add("show");
   };
 }
-
 startGameIntro();
+
+function cancelGame(){
+  const playscreen = document.querySelector(".modal.playscreen");
+  const modal = document.querySelector(".modal");
+
+    stopGame.addEventListener("click", () => {
+      playscreen.classList.remove("show");
+      modal.classList.remove("hidden");
+
+      humanScore = 0;
+      computerScore = 0;
+      currentRound = 0;
+      resetUI();
+      removeEvents();
+      playAgain.classList.remove("show");
+      nextRound.classList.remove("show");
+      getHumanChoice();
+  });
+}
+cancelGame()
 
 /*-------------------
 
@@ -235,3 +255,4 @@ function resetUI(){
   gameRound.textContent = "";
   getBtns().forEach((btn) => (btn.style.display = "block"));
 }
+
